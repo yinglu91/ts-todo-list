@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import './NewTodo.css';
 import { Todo } from '../todo.model';
 
@@ -8,25 +8,29 @@ type NewTodoProps = {
 };
 
 const NewTodo: React.FC<NewTodoProps> = (props) => {
-  const [text, setText] = useState(props.todo.text);
+  const [todo, setTodo] = useState<Todo>(props.todo);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setText(e.target.value);
+    setTodo({ ...todo, [e.target.name]: e.target.value });
   };
 
   const todoSubmitHandler = (event: React.FormEvent) => {
     event.preventDefault();
 
-    props.onEditTodo({ id: props.todo.id, text: text });
-
-    setText('');
+    props.onEditTodo(todo);
   };
 
   return (
     <form onSubmit={todoSubmitHandler}>
       <div className='form-control'>
-        <label htmlFor='todo-text'>Todo Text</label>
-        <input type='text' id='todo-text' value={text} onChange={onChange} />
+        <label htmlFor='text'>Todo Text</label>
+        <input
+          type='text'
+          id='text'
+          name='text'
+          value={todo.text}
+          onChange={onChange}
+        />
       </div>
 
       <button type='submit'>EDIT TODO</button>

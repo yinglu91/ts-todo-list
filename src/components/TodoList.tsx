@@ -4,7 +4,7 @@ import './TodoList.css';
 import { Todo } from '../todo.model';
 
 interface TodoListProps {
-  items: { id: string; text: string }[];
+  items: Todo[];
   setCurrent: (todo: Todo) => void;
   onDeleteTodo: (id: string) => void;
 }
